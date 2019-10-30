@@ -12,7 +12,7 @@ const options = {
 
 function run() {
   const args = process.argv.slice(2);
-  if (args.length < 1) {
+  if (args.length < 1 || isNaN(args[0])) {
     console.warn("You must specify number of requests as the first argument");
     return;
   }
