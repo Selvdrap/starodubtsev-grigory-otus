@@ -5,8 +5,6 @@ const port = 8080;
 
 const server = http.createServer((req, res) => {
   setTimeout(() => {
-    res.statusCode = 200;
-    res.setHeader("Content-Type", "text/plain");
     let body = [];
     req
       .on("data", chunk => {

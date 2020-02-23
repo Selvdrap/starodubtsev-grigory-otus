@@ -18,24 +18,26 @@ function run() {
   }
 
   const n = parseInt(args[0]);
-  const nums = [...new Array(n)].map(() => {
-    return Math.floor(Math.random() * (n + 1));
-  });
+  const nums = [];
+  for(let i = 0; i <= n; i++) {
+    nums.push(Math.floor(Math.random() * (n + 1)));
+  }
 
   if (args[1] === "async") {
-    Promise.all(nums.map(n => makeRequest(options, `${n}`))).then(values =>
+    Promise.all(nums.map(n => makeRequest(`${n}`))).then(values =>
       console.log(values.join("\n"))
-    );
+    ).catch(e => console.error(`Error: ${e}`));;
   } else {
     nums.reduce((acc, current) => {
       return acc
-        .then(() => makeRequest(options, `${current}`))
-        .then(console.log);
+        .then(() => makeRequest(`${current}`))
+        .then(console.log)
+        .catch(e => console.error(`Error: ${e}`));
     }, Promise.resolve());
   }
 }
 
-function makeRequest(options, postData) {
+function makeRequest(postData) {
   return new Promise((resolve, reject) => {
     const req = http.request(options, res => {
       if (res.statusCode !== 200) {
